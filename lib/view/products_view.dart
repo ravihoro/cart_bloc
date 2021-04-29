@@ -1,9 +1,11 @@
 import 'package:cart_bloc/bloc/favorites/favorites_cubit.dart';
 import 'package:cart_bloc/model/item.dart';
+import 'package:cart_bloc/view/favorites_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/product/product_bloc.dart';
 import './product_detail_view.dart';
+import './cart_view.dart';
 
 class ProductsView extends StatelessWidget {
   @override
@@ -15,12 +17,20 @@ class ProductsView extends StatelessWidget {
         actions: [
           GestureDetector(
             child: Icon(Icons.favorite),
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => FavoritesView()));
+            },
           ),
           SizedBox(
             width: 10,
           ),
           GestureDetector(
             child: Icon(Icons.shopping_cart),
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => CartView()));
+            },
           ),
           SizedBox(
             width: 10,
