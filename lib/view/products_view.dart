@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/product/product_bloc.dart';
 import './product_detail_view.dart';
-import './cart_view.dart';
+import '../widgets/cart_icon.dart';
 
 class ProductsView extends StatelessWidget {
   @override
@@ -23,15 +23,9 @@ class ProductsView extends StatelessWidget {
             },
           ),
           SizedBox(
-            width: 10,
+            width: 15,
           ),
-          GestureDetector(
-            child: Icon(Icons.shopping_cart),
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => CartView()));
-            },
-          ),
+          CartIcon(),
           SizedBox(
             width: 10,
           ),

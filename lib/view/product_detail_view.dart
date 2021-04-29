@@ -12,7 +12,7 @@ class ProductDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Item> cartItems = context.read<CartCubit>().state.cartItems;
+    List<Item> cartItems = context.watch<CartCubit>().state.cartItems;
 
     return Scaffold(
       appBar: AppBar(
@@ -115,15 +115,10 @@ class ProductDetailsView extends StatelessWidget {
                     ),
                     onPressed: () {
                       context.read<CartCubit>().addToCart(item: item);
-                      if (context
+
+                      context
                           .read<FavoritesCubit>()
-                          .state
-                          .favorites
-                          .contains(item)) {
-                        context
-                            .read<FavoritesCubit>()
-                            .removeFromFavorites(item: item);
-                      }
+                          .removeFromFavorites(item: item);
                     },
                   ),
           ],

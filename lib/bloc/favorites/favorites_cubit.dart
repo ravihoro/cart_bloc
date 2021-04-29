@@ -9,13 +9,17 @@ class FavoritesCubit extends Cubit<FavoritesState> {
 
   void addToFavorites({Item item}) {
     List<Item> items = state.favorites;
-    items.add(item);
-    emit(FavoritesState(favorites: items));
+    if (!items.contains(item)) {
+      items.add(item);
+      emit(FavoritesState(favorites: items));
+    }
   }
 
   void removeFromFavorites({Item item}) {
     List<Item> items = state.favorites;
-    items.remove(item);
-    emit(FavoritesState(favorites: items));
+    if (items.contains(item)) {
+      items.remove(item);
+      emit(FavoritesState(favorites: items));
+    }
   }
 }
