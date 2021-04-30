@@ -78,12 +78,15 @@ class ProductsView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  alignment: Alignment.center,
-                  height: 200,
-                  child: Image.network(
-                    item.imageUrl,
-                    fit: BoxFit.contain,
+                Hero(
+                  tag: item.id,
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 200,
+                    child: Image.network(
+                      item.imageUrl,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
                 Spacer(),
@@ -100,9 +103,7 @@ class ProductsView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: 15,
-                    ),
+                    Spacer(),
                     BlocBuilder<FavoritesCubit, FavoritesState>(
                       builder: (context, state) {
                         return state.favorites.contains(item)

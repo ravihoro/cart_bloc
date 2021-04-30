@@ -7,13 +7,13 @@ import '../model/item.dart';
 class CartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Cart'),
-      ),
-      body: BlocBuilder<CartCubit, CartState>(
-        builder: (context, state) {
-          return state.cartItems.length == 0
+    return BlocBuilder<CartCubit, CartState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('Cart'),
+          ),
+          body: state.cartItems.length == 0
               ? Center(
                   child: Text(
                     'No items in cart.',
@@ -24,9 +24,39 @@ class CartView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return customListTile(state.cartItems[index], context);
                   },
-                );
-        },
-      ),
+                ),
+          bottomNavigationBar: BottomAppBar(
+            //color: Colors.grey[100],
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  state.totalPrice == 0.0
+                      ? 'Total: 0.0'
+                      : "Total:  \$${state.totalPrice.toStringAsFixed(2)}",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                TextButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateColor.resolveWith((states) =>
+                        state.totalPrice == 0.0 ? Colors.grey : Colors.blue),
+                  ),
+                  onPressed: (state.totalPrice == 0.0 ? null : () {}),
+                  child: Text(
+                    "Place Order",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -95,7 +125,9 @@ class CartView extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () {
-                                  //baseModel.decrementCount(item);
+                                  context
+                                      .read<CartCubit>()
+                                      .decrementItemCount(item);
                                 },
                                 child: Container(
                                   alignment: Alignment.center,
@@ -105,7 +137,7 @@ class CartView extends StatelessWidget {
                                   child: Text(
                                     "-",
                                     style: TextStyle(
-                                      color: Colors.deepPurpleAccent,
+                                      color: Colors.blue,
                                       fontSize: 30,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -119,8 +151,7 @@ class CartView extends StatelessWidget {
                                   width: 30,
                                   alignment: Alignment.center,
                                   child: Text(
-                                    "1",
-                                    //"${baseModel.cartMap[item.id]}",
+                                    "${context.watch<CartCubit>().state.cartMap[item.id]}",
                                     style: TextStyle(
                                       fontSize: 18.0,
                                     ),
@@ -129,7 +160,9 @@ class CartView extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () {
-                                  //baseModel.incrementCount(item);
+                                  context
+                                      .read<CartCubit>()
+                                      .incrementItemCount(item);
                                 },
                                 child: Container(
                                   alignment: Alignment.center,
@@ -139,7 +172,7 @@ class CartView extends StatelessWidget {
                                   child: Text(
                                     "+",
                                     style: TextStyle(
-                                      color: Colors.deepPurpleAccent,
+                                      color: Colors.blue,
                                       fontSize: 30,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -165,7 +198,7 @@ class CartView extends StatelessWidget {
                   child: Text(
                     'Remove'.toUpperCase(),
                     style: TextStyle(
-                      color: Colors.deepPurpleAccent,
+                      color: Colors.blue,
                       fontSize: 18.0,
                     ),
                   ),
@@ -182,7 +215,7 @@ class CartView extends StatelessWidget {
                   child: Text(
                     'Move to favorites'.toUpperCase(),
                     style: TextStyle(
-                      color: Colors.deepPurpleAccent,
+                      color: Colors.blue,
                       fontSize: 18.0,
                     ),
                   ),
