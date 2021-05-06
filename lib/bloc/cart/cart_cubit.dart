@@ -19,6 +19,7 @@ class CartCubit extends Cubit<CartState> {
   void decrementItemCount(Item item) {
     int count = state.cartMap[item.id];
     state.totalPrice -= item.price;
+    print(state.totalPrice);
     if (count == 1) {
       state.cartMap.remove(item.id);
       state.cartItems.remove(item);

@@ -42,7 +42,9 @@ class CartView extends StatelessWidget {
                 TextButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateColor.resolveWith((states) =>
-                        state.totalPrice == 0.0 ? Colors.grey : Colors.blue),
+                        state.totalPrice.toStringAsFixed(2) == "0.00"
+                            ? Colors.grey
+                            : Colors.blue),
                   ),
                   onPressed: (state.totalPrice == 0.0 ? null : () {}),
                   child: Text(
